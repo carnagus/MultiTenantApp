@@ -36,11 +36,11 @@ namespace MultiTenantApp.Application.Services
 
         public bool IsUserAllowedForDomain()
         {
-            return _userGroupsDictionary.Values.Any(x => x.ToLower().Contains(_tenant.DomainName.ToLower()));
+            return _userGroupsDictionary.Values.Any(x => x.ToLower().Contains(_tenant.Name.ToLower()));
         }
         public bool IsAdminForDomain()
         {
-            return _groupsDictionary.Values.Any(x => x.ToLower().Contains(ADMIN) && x.ToLower().Contains(_tenant.DomainName.ToLower()));
+            return _groupsDictionary.Values.Any(x => x.ToLower().Contains(ADMIN) && x.ToLower().Contains(_tenant.Name.ToLower()));
         }
 
         public string GetEmail()

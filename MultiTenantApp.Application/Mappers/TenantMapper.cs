@@ -11,7 +11,8 @@ namespace MultiTenantApp.Application.Mappers
             {
                 DomainName = tenantEntity.DomainName,
                 ConnectionString = tenantEntity.ConnectionString,
-                Default = tenantEntity.Default
+                Default = tenantEntity.Default,
+                Name = tenantEntity.Name
             };
         }
     }
