@@ -8,6 +8,7 @@
 - MediatR
 - Authentication and authorization based on Azure Actice Directory
 - Settins in Azure Key Vault
+- Sengrid
 
 
 ### Features - Todo:
