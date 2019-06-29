@@ -70,11 +70,8 @@ namespace MultiTenantApp.Website
             //dbcontext
             var catalogDbConnectionFromAzure = Configuration[AzureKeyVaultConst.CATALOG_DB_CONNECTIONSTRING];
             services.AddDbContext<CatalogDbContext>(options => options.UseSqlServer(catalogDbConnectionFromAzure));
-            //local
-            //services.AddDbContext<CatalogDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CatalogDb")));
-            //overriden in onconfigurating method for custom string from catalogDb
-            services.AddDbContext<ITravelDbContext,TravelDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CatalogDb")));
-
+            services.AddDbContext<ITravelDbContext, TravelDbContext>();
+            
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("OnlyAzureGroupsForDomain",

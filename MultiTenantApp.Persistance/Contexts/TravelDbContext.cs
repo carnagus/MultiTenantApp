@@ -24,7 +24,10 @@ namespace MultiTenantApp.Persistance.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_tenant.ConnectionString);
+            if (!optionsBuilder.IsConfigured)
+            {
+                            optionsBuilder.UseSqlServer(_tenant.ConnectionString);
+            }
 
             base.OnConfiguring(optionsBuilder);
         }

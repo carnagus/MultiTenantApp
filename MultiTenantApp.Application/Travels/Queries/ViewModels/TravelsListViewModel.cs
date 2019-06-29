@@ -4,6 +4,6 @@ namespace MultiTenantApp.Application.Travels.Queries.ViewModels
 {
     public class TravelsListViewModel
     {
-        public IEnumerable<TravelViewModel> Travels { get; set;}
+        public List<TravelViewModel> Travels { get; set;}
     }
 }

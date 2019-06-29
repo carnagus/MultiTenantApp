@@ -1,13 +1,13 @@
 ﻿namespace MultiTenantApp.Application.Travels.Queries.GetAllTravels
 {
     using MediatR;
+    using Microsoft.EntityFrameworkCore;
     using MultiTenantApp.Application.Interfaces;
+    using MultiTenantApp.Application.Mappers;
     using MultiTenantApp.Application.Travels.Queries.ViewModels;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
-    using MultiTenantApp.Application.Mappers;
-    using System.Linq;
     public class GetAllTravelsQueryHandler: IRequestHandler<GetAllTravelsQuery, TravelsListViewModel>
     {
         private readonly ITravelDbContext _travelDbContext;
