@@ -14,6 +14,7 @@
 ### Features - Todo:
  - NUnit Tests + Moq 
  - Override IViewLocationExpander For Custom Layouts/Themes
+ - Add Validation Rules (FluentValidation)
  - Change cache from memory to Azure Redis
  - Add Free ssl for website from lets encrypt
  - Add CustomsExceptions
