@@ -7,6 +7,7 @@
     using StrongGrid.Models.Webhooks;
     using System.IO;
     using System.Threading.Tasks;
+    using MultiTenantApp.Const;
 
     //used https://sendgrid.com/docs/for-developers/sending-email/libraries/
     //library https://github.com/Jericho/StrongGrid
@@ -18,7 +19,7 @@
         private readonly Client _client;
         public SendGridService(IConfiguration configuration)
         {
-            _sengridApiKey = configuration["SengridApiKey"];
+            _sengridApiKey = configuration[AzureKeyVaultConst.SENDGRID_APIKEY];
             _parser = new WebhookParser();
             _client=new Client(_sengridApiKey);
         }
@@ -28,14 +29,12 @@
             var emailAdressFrom = new MailAddress(from, from);
             await _client.Mail.SendToSingleRecipientAsync(emailAdressTo, emailAdressFrom,subject,htmlContent,textContent);
         }
-
         public async Task<Event[]> ParseWebhookEventsAsync(Stream requestBody)
         {
             var events = await _parser.ParseWebhookEventsAsync(requestBody).ConfigureAwait(false);
 
             return events;
         }
-
         public Task<InboundEmail> ParseInboundEmailWebhook(Stream requestBody)
         {
             var inboundEmail = _parser.ParseInboundEmailWebhook(requestBody);

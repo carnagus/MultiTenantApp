@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MultiTenantApp.Const\MultiTenantApp.Const.csproj" />
     <ProjectReference Include="..\MultiTenantApp.Domain\MultiTenantApp.Domain.csproj" />
   </ItemGroup>
 

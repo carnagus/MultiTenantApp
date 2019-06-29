@@ -4,6 +4,7 @@ using MultiTenantApp.Application.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MultiTenantApp.Const;
 
 namespace MultiTenantApp.Application.Services
 {
@@ -11,8 +12,6 @@ namespace MultiTenantApp.Application.Services
     {
         private const string TENANT_NOT_FOUND = "Tenant not found";
         private const string EMPTY_URL = "Url without domain";
-        private const string CACHE_NAME = "Tenants";
-        private const string HTTPCONTEXT_KEY = "Tenant";
 
         internal static readonly object Locker = new object();
         private readonly ICatalogRepository _catalogRepository;
@@ -27,8 +26,7 @@ namespace MultiTenantApp.Application.Services
 
         public void SetTenantsToCache()
         {
-            List<TenantModel> tenants;
-            tenants = (List<TenantModel>)_cache.Get(CACHE_NAME);
+            var tenants = (List<TenantModel>)_cache.Get(TenantConst.CACHE_NAME);
 
             if (tenants == null)
             {
@@ -37,7 +35,7 @@ namespace MultiTenantApp.Application.Services
                     if (tenants == null)
                     {
                          tenants = _catalogRepository.GetTenants();
-                        _cache.Set(CACHE_NAME, tenants, new TimeSpan(0, 0,30));
+                        _cache.Set(TenantConst.CACHE_NAME, tenants, new TimeSpan(0, 0,30));
                     }
                 }
             }
@@ -49,10 +47,10 @@ namespace MultiTenantApp.Application.Services
             if (domain == null)
                 throw new ApplicationException(EMPTY_URL);
 
-            if (_accessor.HttpContext.Items.TryGetValue(HTTPCONTEXT_KEY, out var tenant))
+            if (_accessor.HttpContext.Items.TryGetValue(TenantConst.HTTPCONTEXT_KEY, out var tenant))
                 return tenant as TenantModel;
 
-            if (_cache.TryGetValue(CACHE_NAME, out var tenantsTemp))
+            if (_cache.TryGetValue(TenantConst.CACHE_NAME, out var tenantsTemp))
             {
                 var tenants = (List<TenantModel>) tenantsTemp;
 

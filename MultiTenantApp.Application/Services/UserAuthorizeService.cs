@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using MultiTenantApp.Application.Interfaces;
-
-namespace MultiTenantApp.Application.Services
+﻿namespace MultiTenantApp.Application.Services
 {
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
+    using MultiTenantApp.Application.Interfaces;
+    using MultiTenantApp.Const;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     public class UserAuthorizeService: IUserAuthorizeService
     {
         private const string ADMIN = "admin";
@@ -25,10 +23,10 @@ namespace MultiTenantApp.Application.Services
             _accessor = accessor;
             _groupsDictionary= new Dictionary<string, string>
             {
-                {_configuration["SpanishTravelUser"],"SpanishTravelUser" },
-                {_configuration["SpanishTravelAdmin"],"SpanishTravelAdmin" },
-                {_configuration["PolishTravelUser"],"PolishTravelUser"},
-                {_configuration["PolishTravelAdmin"],"PolishTravelAdmin" }
+                {_configuration[AzureKeyVaultConst.SPANISH_TRAVEL_USER],AzureKeyVaultConst.SPANISH_TRAVEL_USER },
+                {_configuration[AzureKeyVaultConst.SPANISH_TRAVEL_ADMIN],AzureKeyVaultConst.SPANISH_TRAVEL_ADMIN },
+                {_configuration[AzureKeyVaultConst.POLISH_TRAVEL_USER],AzureKeyVaultConst.POLISH_TRAVEL_USER},
+                {_configuration[AzureKeyVaultConst.POLISH_TRAVEL_ADMIN],AzureKeyVaultConst.POLISH_TRAVEL_ADMIN }
             };
             _tenant= _tenantService.GetTenant();
             _userGroupsDictionary = GetUsersGroupDictionary();

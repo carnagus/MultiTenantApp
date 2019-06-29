@@ -1,4 +1,4 @@
-﻿using MultiTenantApp.Website.AuthorizeHandlers;
+﻿
 
 namespace MultiTenantApp.Website
 {
@@ -21,6 +21,8 @@ namespace MultiTenantApp.Website
     using MultiTenantApp.Application.Travels.Queries.GetAllTravels;
     using MultiTenantApp.Persistance.Contexts;
     using MultiTenantApp.Persistance.Repositories;
+    using MultiTenantApp.Const;
+    using MultiTenantApp.Website.AuthorizeHandlers;
     using System.Reflection;
     public class Startup
     {
@@ -45,11 +47,11 @@ namespace MultiTenantApp.Website
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
                 .AddAzureAD(options =>
                 {
-                   options.Instance= Configuration["Instance"];
-                   options.Domain= Configuration["Domain"];
-                   options.TenantId = Configuration["TenantId"];
-                   options.ClientId = Configuration["ClientId"];
-                   options.CallbackPath = Configuration["CallbackPath"];
+                   options.Instance= Configuration[AzureKeyVaultConst.AZUREAD_INSTANCE];
+                   options.Domain= Configuration[AzureKeyVaultConst.AZUREAD_DOMAIN];
+                   options.TenantId = Configuration[AzureKeyVaultConst.AZUREAD_TENANT_ID];
+                   options.ClientId = Configuration[AzureKeyVaultConst.AZUREAD_CLIENT_ID];
+                   options.CallbackPath = Configuration[AzureKeyVaultConst.AZUREAD_CALLBACK_PATH];
                 });
 
             //local config
@@ -66,7 +68,7 @@ namespace MultiTenantApp.Website
 
 
             //dbcontext
-            var catalogDbConnectionFromAzure = Configuration["CatalogDb"];
+            var catalogDbConnectionFromAzure = Configuration[AzureKeyVaultConst.CATALOG_DB_CONNECTIONSTRING];
             services.AddDbContext<CatalogDbContext>(options => options.UseSqlServer(catalogDbConnectionFromAzure));
             //local
             //services.AddDbContext<CatalogDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CatalogDb")));
@@ -134,9 +136,9 @@ namespace MultiTenantApp.Website
             {
                 _tenantService.SetTenantsToCache();
                 var tenant = _tenantService.GetTenant();
-                if (!context.Items.TryGetValue("Tenant",  out var tenantObject))
+                if (!context.Items.TryGetValue(TenantConst.HTTPCONTEXT_KEY,  out var tenantObject))
                 {
-                    context.Items.Add("Tenant", tenant);
+                    context.Items.Add(TenantConst.HTTPCONTEXT_KEY, tenant);
                 }
                 await next.Invoke();
             });

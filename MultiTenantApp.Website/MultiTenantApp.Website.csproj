@@ -41,6 +41,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MultiTenantApp.Application\MultiTenantApp.Application.csproj" />
+    <ProjectReference Include="..\MultiTenantApp.Const\MultiTenantApp.Const.csproj" />
     <ProjectReference Include="..\MultiTenantApp.Persistance\MultiTenantApp.Persistance.csproj" />
   </ItemGroup>
 

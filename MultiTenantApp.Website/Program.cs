@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
 using System;
+using MultiTenantApp.Const;
 
 namespace MultiTenantApp.Website
 {
@@ -54,6 +55,6 @@ namespace MultiTenantApp.Website
                 })
                 .UseNLog();
 
-        private static string GetKeyVaultEndpoint() => "https://multitenant.vault.azure.net/";
+        private static string GetKeyVaultEndpoint() => AzureKeyVaultConst.URL;
     }
 }
